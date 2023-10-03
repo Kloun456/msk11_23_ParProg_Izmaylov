@@ -1,20 +1,92 @@
-﻿// ParallelProgramming.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <fstream>
+#include <string>
 
-#include <iostream>
+
+using namespace std;
+
+
+int* dinamicArray(int& n)
+{
+    int *arr;
+
+    cout << "Введите размер массива: ";
+    cin >> n;
+    arr = new int[n];
+    for (int i = 0; i < n; i++)
+        arr[i] = i;
+    return arr;
+}
+
+void printArrayRange(int *arr, int n)
+{
+    int a = -1, b = 0;
+    while (a < 0 || a > n)
+    {
+        cout << "Введите начальную границу диапозона: ";
+        cin >> a;
+        if (a < 0 || a > n)
+            cout << "\nВы ввели недопустимую начальную границу\n";
+    }
+    b = a;
+    do
+    {
+        cout << "Введите конечную границу диапозона: ";
+        cin >> b;
+        if (b < a || b > n)
+            cout << "\nВы ввели недопустимую конечную границу\n";
+
+    } while (b < a || b > n);
+    cout << "\nМассив в диапозоне от " << a << " до " << b << " :\n";
+    for (int i = a; i < b; i++)
+        cout << arr[i] << endl;
+}
+
+void saveArrayInFile(int *arr, int n)
+{
+    ofstream file;
+    file.open("binary.txt", ios::out | ios::binary);
+    for (int i = 0; i < n; i++)
+    {
+        file.write((char*)&arr[i], sizeof arr[i]);
+    }
+    file.close();
+}
+
+void printArrayOutFile(int n)
+{
+    ifstream file;
+    int* arr = new int[n];
+    file.open("binary.txt", ios::in | ios::binary);
+
+    cout << "\nМассив:\n";
+    for (int i = 0; i < n; i++)
+    {
+        file.read((char*)&arr[i], sizeof arr[i]);
+        cout << arr[i] << endl;
+    }
+    file.close();
+    
+}
+
+void funcFile()
+{
+    ifstream file;
+    file.open("comp_system.txt", ios_base::in);
+    string str;
+    while (getline(file, str))
+    {
+        cout << str << endl;
+    }
+    file.close();
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    setlocale(0, "");
+    int n, *arr;
+    arr = dinamicArray(n);
+    //printArrayRange(arr, n);
+    saveArrayInFile(arr, n);
+    printArrayOutFile(n);
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
