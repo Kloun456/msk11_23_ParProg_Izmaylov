@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
+
 
 
 using namespace std;
@@ -85,8 +87,11 @@ int main()
 {
     setlocale(0, "");
     int n, *arr;
+    clock_t clock1 = clock();
     arr = dinamicArray(n);
-    //printArrayRange(arr, n);
+    printArrayRange(arr, n);
     saveArrayInFile(arr, n);
     printArrayOutFile(n);
+    clock_t clock2 = clock();
+    cout << "\nWork time - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
 }
