@@ -10,13 +10,19 @@ using namespace std;
 
 int* dinamicArray(int& n)
 {
+    
     int *arr;
 
     cout << "Введите размер массива: ";
     cin >> n;
+    clock_t clock1 = clock();
+
     arr = new int[n];
     for (int i = 0; i < n; i++)
         arr[i] = i;
+
+    clock_t clock2 = clock();
+    cout << "\nВремя работы функции dinamicArray - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
     return arr;
 }
 
@@ -39,13 +45,20 @@ void printArrayRange(int *arr, int n)
             cout << "\nВы ввели недопустимую конечную границу\n";
 
     } while (b < a || b > n);
+
+    clock_t clock1 = clock();
+
     cout << "\nМассив в диапозоне от " << a << " до " << b << " :\n";
     for (int i = a; i < b; i++)
         cout << arr[i] << endl;
+
+    clock_t clock2 = clock();
+    cout << "\nВремя работы функции printArrayRange - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
 }
 
 void saveArrayInFile(int *arr, int n)
 {
+    clock_t clock1 = clock();
     ofstream file;
     file.open("binary.txt", ios::out | ios::binary);
     for (int i = 0; i < n; i++)
@@ -53,10 +66,13 @@ void saveArrayInFile(int *arr, int n)
         file.write((char*)&arr[i], sizeof arr[i]);
     }
     file.close();
+    clock_t clock2 = clock();
+    cout << "\nВремя работы функции saveArrayInFile - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
 }
 
 void printArrayOutFile(int n)
 {
+    clock_t clock1 = clock();
     ifstream file;
     int* arr = new int[n];
     file.open("binary.txt", ios::in | ios::binary);
@@ -68,11 +84,13 @@ void printArrayOutFile(int n)
         cout << arr[i] << endl;
     }
     file.close();
-    
+    clock_t clock2 = clock();
+    cout << "\nВремя работы функции printArrayOutFile - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
 }
 
 void funcFile()
 {
+    clock_t clock1 = clock();
     ifstream file;
     file.open("comp_system.txt", ios_base::in);
     string str;
@@ -81,6 +99,8 @@ void funcFile()
         cout << str << endl;
     }
     file.close();
+    clock_t clock2 = clock();
+    cout << "\nВремя работы функции funcFile- " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
 }
 
 int main()
@@ -93,5 +113,5 @@ int main()
     saveArrayInFile(arr, n);
     printArrayOutFile(n);
     clock_t clock2 = clock();
-    cout << "\nWork time - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
+    cout << "\nОбщее время программы - " << (clock2 - clock1 + .0) / CLOCKS_PER_SEC << endl;
 }
